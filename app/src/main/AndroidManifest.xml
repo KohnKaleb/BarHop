@@ -13,6 +13,9 @@
         android:theme="@style/Theme.BarHop"
         tools:targetApi="31">
         <activity
+            android:name=".BarInfo"
+            android:exported="false" />
+        <activity
             android:name=".Favorites"
             android:exported="false" />
         <activity

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,4 +45,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void viewMore(View view) {
+        Intent intent = new Intent(this, BarInfo.class);
+        System.out.println(view.getTag());
+        intent.putExtra("barId", view.getTag().toString());
+        startActivity(intent);
+    }
 }

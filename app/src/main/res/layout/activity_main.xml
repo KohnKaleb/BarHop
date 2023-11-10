@@ -6,13 +6,447 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="415dp"
+        android:layout_height="722dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/redRock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/redRock"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/redRockFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/redRockButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="redRock"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/whiskeys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/whiskeys"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/whiskeysFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/whiskeysButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="whiskeys"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/chasers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/chasers"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chasersFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/chasersButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="chasers"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/mondays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mondays"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mondaysFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/mondaysButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="mondays"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/dannys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dannys"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dannysFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/dannysButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="dannys"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/mackeseys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mackeseys"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mackeseysFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/mackeseysButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="mackeseys"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/plaza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/plaza"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/plazaFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/plazaButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="plaza"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/cask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cask"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/caskFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/caskButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="cask"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/pauls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pauls"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/paulsFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/paulsButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="pauls"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/silver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/silver"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/silverFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/silverButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="silver"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/coopers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/coopers"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/coopersFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/coopersButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="coopers"/>
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/gennas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gennas"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/gennasFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/gennasButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="gennas"/>
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/paradise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/paradise"
+                android:textSize="34sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/paradiseFriends"
+                    android:layout_width="163dp"
+                    android:layout_height="36dp"
+                    android:gravity="center_horizontal"
+                    android:text="# friends"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/paradiseButton"
+                    android:layout_width="204dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/viewMore"
+                    android:onClick="viewMore"
+                    android:tag="paradise"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

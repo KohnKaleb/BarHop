@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">BarHop</string>
+    <string name="viewMore">View More</string>
+    <string name="redRock">Red Rock Saloon</string>
+    <string name="whiskeys">Whiskey Jack\'s Saloon</string>
+    <string name="chasers">Chasers</string>
+    <string name="mondays">Mondays</string>
+    <string name="dannys">Danny\'s Pub</string>
+    <string name="mackeseys">Mackesey\'s Irish Pub</string>
+    <string name="plaza">The Plaza Tavern</string>
+    <string name="cask">Cask &amp; Ale</string>
+    <string name="pauls">Paul\'s Club</string>
+    <string name="silver">Silver Dollar Tavern</string>
+    <string name="coopers">The Coopers Tavern</string>
+    <string name="gennas">Genna\'s Lounge</string>
+    <string name="paradise">Paradise Lounge</string>
 </resources>
