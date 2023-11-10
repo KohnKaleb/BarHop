@@ -47,6 +47,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="redRock"/>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -80,6 +88,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="whiskeys"/>
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -113,6 +129,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="chasers"/>
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -146,6 +170,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="mondays"/>
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -179,6 +211,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="dannys"/>
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -212,6 +252,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="mackeseys"/>
+
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -245,6 +293,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="plaza"/>
+
+                <Button
+                    android:id="@+id/button7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -278,6 +334,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="cask"/>
+
+                <Button
+                    android:id="@+id/button8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -311,6 +375,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="pauls"/>
+
+                <Button
+                    android:id="@+id/button9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -344,6 +416,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="silver"/>
+
+                <Button
+                    android:id="@+id/button10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
             <Space
@@ -377,6 +457,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="coopers"/>
+
+                <Button
+                    android:id="@+id/button11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
 
@@ -411,6 +499,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="gennas"/>
+
+                <Button
+                    android:id="@+id/button12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
 
 
@@ -445,6 +541,14 @@
                     android:text="@string/viewMore"
                     android:onClick="viewMore"
                     android:tag="paradise"/>
+
+                <Button
+                    android:id="@+id/button13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button"
+                    android:background="@drawable/baseline_favorite_24"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

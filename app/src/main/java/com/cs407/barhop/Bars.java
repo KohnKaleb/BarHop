@@ -10,11 +10,16 @@ public class Bars {
 
     private String name;
 
+    private String description;
+
     private String latitude;
 
     private String longitude;
 
     /* getters and setters */
+    public String getDescription() {return description;}
+
+    public void setDescription(String description) {this.description = description;}
     public String getName() {
         return name;
     }
