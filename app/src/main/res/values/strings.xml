@@ -14,4 +14,8 @@
     <string name="coopers">The Coopers Tavern</string>
     <string name="gennas">Genna\'s Lounge</string>
     <string name="paradise">Paradise Lounge</string>
+    <string name="friends_header">Your Friends</string>
+    <string name="favorites_header">Your Favorites</string>
+    <string name="history_header">History</string>
+    <string name="profile_header">Profile</string>
 </resources>
