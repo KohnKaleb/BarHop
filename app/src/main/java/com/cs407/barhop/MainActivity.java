@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.Manifest;
 import android.content.Context;
@@ -12,23 +15,31 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Build;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
 
+    private BarHopDatabase barhopDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        populateAndRetrieveData();
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -52,6 +63,39 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void populateAndRetrieveData() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                // Get a reference to your database instance
+                BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
+
+                // Access the DAO
+                BarsDao barsDao = database.barsDao();
+
+                // Check if the database is empty
+                if (barsDao.getAllEntities().size() == 0) {
+                    // If empty, populate the database
+                    Bars bestBar = new Bars();
+                    bestBar.setDescription("cool");
+                    bestBar.setName("cool bar");
+                    barsDao.insert(bestBar);
+                }
+
+                // Retrieve data after populating the database
+                List<Bars> bars = barsDao.getAllEntities();
+                Log.e("FINALLY!", String.valueOf(bars.size()));
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                // Handle any UI updates or further processing here
+            }
+        }.execute();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

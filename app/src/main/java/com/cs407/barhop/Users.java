@@ -1,5 +1,6 @@
 package com.cs407.barhop;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class Users {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "userName")
     private String userName;
 
     /* getters and setters */
@@ -16,5 +18,13 @@ public class Users {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
