@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,10 +20,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Build;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
 
     private BarHopDatabase barhopDatabase;
+    private BarsDao barsDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void populateAndRetrieveData() {
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -72,26 +80,46 @@ public class MainActivity extends AppCompatActivity {
                 BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
 
                 // Access the DAO
-                BarsDao barsDao = database.barsDao();
-
+                barsDao = database.barsDao();
                 // Check if the database is empty
                 if (barsDao.getAllEntities().size() == 0) {
                     // If empty, populate the database
                     Bars bestBar = new Bars();
                     bestBar.setDescription("cool");
-                    bestBar.setName("cool bar");
+                    bestBar.setName("Red Rock Saloon");
                     barsDao.insert(bestBar);
                 }
 
                 // Retrieve data after populating the database
-                List<Bars> bars = barsDao.getAllEntities();
-                Log.e("FINALLY!", String.valueOf(bars.size()));
+
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 // Handle any UI updates or further processing here
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View v = inflater.inflate(R.layout.activity_main, null);
+                ScrollView sv = v.findViewById(R.id.scrollView);
+                LinearLayout ll = new LinearLayout(getBaseContext());
+                ll.setOrientation(LinearLayout.VERTICAL);
+                List<Bars> bars = barsDao.getAllEntities();
+                Log.e("FINALLY!", String.valueOf(bars.size()));
+                for(Bars b: bars){
+                    Log.e("please", b.getName());
+                    TextView name = new TextView(getBaseContext());
+                    name.setText(b.getName());
+                    name.setTextSize(34);
+                    ll.addView(name);
+                    LinearLayout horizontal = new LinearLayout(getBaseContext());
+                    horizontal.setOrientation(LinearLayout.HORIZONTAL);
+                    TextView friends = new TextView(getBaseContext());
+                    friends.setText("# friends");
+                    horizontal.addView(friends);
+                    ll.addView(horizontal);
+                }
+                sv.addView(ll);
+                setContentView(v);
             }
         }.execute();
     }
