@@ -16,10 +16,12 @@ public class BarInfo extends AppCompatActivity{
         setContentView(R.layout.activity_bar_info);
 
         Intent givenIntent = getIntent();
-        String s = givenIntent.getStringExtra("barId");
+        String title = givenIntent.getStringExtra("title");
         TextView barTitle = findViewById(R.id.barTitle);
-        barTitle.setText(s + "\nis the bar you clicked on. " +
-                "We need to fill this page out still but its good to know they're each unique right?");
+        barTitle.setText(title);
+        String description = givenIntent.getStringExtra("description");
+        TextView barDesc = findViewById(R.id.barDescription);
+        barDesc.setText(description);
 
         xIcon = findViewById(R.id.imageViewX);
         xIcon.setOnClickListener(new View.OnClickListener() {

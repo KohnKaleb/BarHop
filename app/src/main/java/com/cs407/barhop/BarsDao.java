@@ -13,4 +13,7 @@ public interface BarsDao {
 
     @Query("SELECT * FROM bars")
     List<Bars> getAllEntities();
+
+    @Query("DELETE FROM bars")
+    void deleteAll();
 }

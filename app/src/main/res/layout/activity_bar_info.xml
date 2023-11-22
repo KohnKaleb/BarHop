@@ -5,30 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageViewX"
-        android:layout_width="41dp"
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="23dp"
-        android:src="@drawable/img"
-        app:layout_constraintBottom_toTopOf="@+id/barTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/barTitle"
-        android:layout_width="377dp"
-        android:layout_height="599dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="40dp"
-        android:gravity="center_horizontal"
-        android:text="insert ID here"
-        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imageViewX"
+                    android:layout_width="41dp"
+                    android:layout_height="52dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/img" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/barTitle"
+                android:layout_width="376dp"
+                android:layout_height="84dp"
+                android:gravity="center_horizontal"
+                android:text="Title"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/barDescription"
+                android:layout_width="379dp"
+                android:layout_height="469dp"
+                android:gravity="center_horizontal"
+                android:text="Description"
+                android:textSize="28sp" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

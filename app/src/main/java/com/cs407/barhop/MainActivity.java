@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,8 +27,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,13 +84,77 @@ public class MainActivity extends AppCompatActivity {
 
                 // Access the DAO
                 barsDao = database.barsDao();
+                barsDao.deleteAll();
                 // Check if the database is empty
                 if (barsDao.getAllEntities().size() == 0) {
                     // If empty, populate the database
-                    Bars bestBar = new Bars();
-                    bestBar.setDescription("cool");
-                    bestBar.setName("Red Rock Saloon");
-                    barsDao.insert(bestBar);
+
+                    // All below can be deleted after we decide the database defined
+                    // below has all necessary components
+                    Bars redRock = new Bars();
+                    redRock.setDescription("cool");
+                    redRock.setName("Red Rock Saloon");
+                    barsDao.insert(redRock);
+
+                    Bars whiskeys = new Bars();
+                    whiskeys.setDescription("cool");
+                    whiskeys.setName("Whiskey Jack's Saloon");
+                    barsDao.insert(whiskeys);
+
+                    Bars chasers = new Bars();
+                    chasers.setDescription("cool");
+                    chasers.setName("Chasers");
+                    barsDao.insert(chasers);
+
+                    Bars mondays = new Bars();
+                    mondays.setDescription("cool");
+                    mondays.setName("Mondays");
+                    barsDao.insert(mondays);
+
+                    Bars dannys = new Bars();
+                    dannys.setDescription("cool");
+                    dannys.setName("Danny's Pub");
+                    barsDao.insert(dannys);
+
+                    Bars mackeseys = new Bars();
+                    mackeseys.setDescription("cool");
+                    mackeseys.setName("Mackesey's Irish Pub");
+                    barsDao.insert(mackeseys);
+
+                    Bars plaza = new Bars();
+                    plaza.setDescription("cool");
+                    plaza.setName("The Plaza Tavern");
+                    barsDao.insert(plaza);
+
+                    Bars cask = new Bars();
+                    cask.setDescription("cool");
+                    cask.setName("Cask & Ale");
+                    barsDao.insert(cask);
+
+                    Bars pauls = new Bars();
+                    pauls.setDescription("cool");
+                    pauls.setName("Paul's Club");
+                    barsDao.insert(pauls);
+
+                    Bars silver = new Bars();
+                    silver.setDescription("cool");
+                    silver.setName("Silver Dollar Tavern");
+                    barsDao.insert(silver);
+
+                    Bars coopers = new Bars();
+                    coopers.setDescription("cool");
+                    coopers.setName("The Coopers Tavern");
+                    barsDao.insert(coopers);
+
+                    Bars gennas = new Bars();
+                    gennas.setDescription("cool");
+                    gennas.setName("Genna's Lounge");
+                    barsDao.insert(gennas);
+
+                    Bars paradise = new Bars();
+                    paradise.setDescription("cool");
+                    paradise.setName("Paradise Lounge");
+                    barsDao.insert(redRock);
                 }
 
                 // Retrieve data after populating the database
@@ -105,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 ll.setOrientation(LinearLayout.VERTICAL);
                 List<Bars> bars = barsDao.getAllEntities();
                 Log.e("FINALLY!", String.valueOf(bars.size()));
+                int count = 0;
                 for(Bars b: bars){
                     Log.e("please", b.getName());
                     TextView name = new TextView(getBaseContext());
@@ -115,8 +183,26 @@ public class MainActivity extends AppCompatActivity {
                     horizontal.setOrientation(LinearLayout.HORIZONTAL);
                     TextView friends = new TextView(getBaseContext());
                     friends.setText("# friends");
+                    friends.setTextSize(28);
                     horizontal.addView(friends);
+                    Button viewMore = new Button(getBaseContext());
+                    viewMore.setText("View More");
+                    viewMore.setWidth(400);
+                    viewMore.setId(count);
+                    viewMore.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewMore(v);
+                        }
+                    });
+                    horizontal.addView(viewMore);
+//                    Button favorite = new Button(getBaseContext());
+//                    favorite.setBackground("@drawable/baseline_favorite_24");
                     ll.addView(horizontal);
+                    Space space = new Space(getBaseContext());
+                    space.setMinimumHeight(20);
+                    ll.addView(space);
+                    count++;
                 }
                 sv.addView(ll);
                 setContentView(v);
@@ -153,8 +239,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void viewMore(View view) {
         Intent intent = new Intent(this, BarInfo.class);
-        System.out.println(view.getTag());
-        intent.putExtra("barId", view.getTag().toString());
+        List<Bars> bars = barsDao.getAllEntities();
+        Bars currBar = bars.get(view.getId());
+        intent.putExtra("title", currBar.getName());
+        intent.putExtra("description", currBar.getDescription());
         startActivity(intent);
     }
 
