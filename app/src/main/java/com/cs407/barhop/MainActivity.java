@@ -4,16 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,13 +22,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -171,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout ll = new LinearLayout(getBaseContext());
                 ll.setOrientation(LinearLayout.VERTICAL);
                 List<Bars> bars = barsDao.getAllEntities();
-                Log.e("FINALLY!", String.valueOf(bars.size()));
                 int count = 0;
                 for(Bars b: bars){
                     Log.e("please", b.getName());
@@ -196,6 +190,23 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     horizontal.addView(viewMore);
+                    ImageButton heartButton = new ImageButton(getBaseContext());
+                    heartButton.setBackgroundResource(R.drawable.gray_heart);
+                    heartButton.setOnClickListener(new View.OnClickListener() {
+                        boolean isGray = true;
+                        @Override
+                        public void onClick(View v) {
+                            if (isGray) {
+                                heartButton.setBackgroundResource(R.drawable.red_heart);
+                                isGray = false;
+                            } else {
+                                heartButton.setBackgroundResource(R.drawable.gray_heart);
+                                isGray = true;
+                            }
+                            // TODO update database on foat on god
+                        }
+                    });
+                    horizontal.addView(heartButton);
 //                    Button favorite = new Button(getBaseContext());
 //                    favorite.setBackground("@drawable/baseline_favorite_24");
                     ll.addView(horizontal);
