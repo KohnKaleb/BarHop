@@ -2,6 +2,7 @@ package com.cs407.barhop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,29 +10,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class userLogin extends AppCompatActivity implements LoginResultListener {
+public class UserLogin extends AppCompatActivity implements LoginResultListener {
 
+    EditText username;
+    EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
     }
 
     public void login(View view) {
-        EditText username = findViewById(R.id.username);
-        EditText password = findViewById(R.id.password);
         validateLogin(username.getText().toString(), password.getText().toString());
     }
 
     public void signup(View view) {
-        EditText username = findViewById(R.id.username);
-        EditText password = findViewById(R.id.password);
         updateDatabase(username.getText().toString(), password.getText().toString());
-
     }
     public void goToActivity(String s) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("message", s);
+        intent.putExtra("username", s);
         startActivity(intent);
     }
 
@@ -40,6 +40,7 @@ public class userLogin extends AppCompatActivity implements LoginResultListener 
         databaseQueryTask.execute();
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void updateDatabase(String username, String password) {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
@@ -66,7 +67,7 @@ public class userLogin extends AppCompatActivity implements LoginResultListener 
                 if (isUpdated) {
                     // Username was updated successfully
                     Toast.makeText(getApplicationContext(), "User updated!", Toast.LENGTH_SHORT).show();
-                    goToActivity("ayyyyy");
+                    goToActivity(username);
                 } else {
                     // Username already exists
                     Toast.makeText(getApplicationContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
@@ -77,7 +78,7 @@ public class userLogin extends AppCompatActivity implements LoginResultListener 
 
     @Override
     public void onLoginSuccess() {
-        goToActivity("AYYYYY");
+        goToActivity(username.getText().toString());
     }
 
     @Override

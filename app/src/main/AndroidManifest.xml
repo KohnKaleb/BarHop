@@ -34,7 +34,7 @@
             android:name=".Profile"
             android:exported="false" />
         <activity
-            android:name=".userLogin"
+            android:name=".UserLogin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

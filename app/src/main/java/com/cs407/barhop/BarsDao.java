@@ -17,4 +17,7 @@ public interface BarsDao {
 
     @Query("DELETE FROM bars")
     void deleteAll();
+
+    @Query("SELECT * FROM bars WHERE name = :barName")
+    Bars getBar(String barName);
 }

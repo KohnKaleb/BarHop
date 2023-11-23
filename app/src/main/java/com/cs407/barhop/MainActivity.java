@@ -16,7 +16,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
     private BarHopDatabase barhopDatabase;
     private BarsDao barsDao;
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        username = getIntent().getStringExtra("username");
         populateAndRetrieveData();
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -193,16 +195,18 @@ public class MainActivity extends AppCompatActivity {
                     heartButton.setBackgroundResource(R.drawable.gray_heart);
                     heartButton.setOnClickListener(new View.OnClickListener() {
                         boolean isGray = true;
+                        Bars clickedBar = (Bars) v.getTag();
                         @Override
                         public void onClick(View v) {
                             if (isGray) {
                                 heartButton.setBackgroundResource(R.drawable.red_heart);
                                 isGray = false;
+                                addFavoriteBar(true, clickedBar.getName());
                             } else {
                                 heartButton.setBackgroundResource(R.drawable.gray_heart);
                                 isGray = true;
+                                addFavoriteBar(false, clickedBar.getName());
                             }
-                            // TODO update database on foat on god
                         }
                     });
                     horizontal.addView(heartButton);
@@ -238,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, Profile.class);
         } else if (itemId == R.id.friends) {
             intent = new Intent(this, Friends.class);
+        } else if (itemId == R.id.logout) {
+            intent = new Intent(this, UserLogin.class);
         }
 
         startActivity(intent);
@@ -274,7 +280,60 @@ public class MainActivity extends AppCompatActivity {
         // TODO: do stuff with the location of the user
         // here is where we will do many fun and interesting things with the users location data!
         // see lab 4 milestone 2 for example
+    }
 
+    @SuppressLint("StaticFieldLeak")
+    public void addFavoriteBar(Boolean isAdd, String barName) {
+        // add favorite to database
+        if (isAdd) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
+                    BarsDao barsDao = db.barsDao();
+                    UsersDao usersDao = db.usersDao();
+                    UsersFavoriteBarsDao favoriteBarsDao = db.favoritesDao();
+                    Users currUser = usersDao.getUser(username);
+                    Bars clickedBar = barsDao.getBar(barName);
 
+                    if (currUser != null && clickedBar != null) {
+                        UsersFavoriteBars newFav = new UsersFavoriteBars();
+                        newFav.setBarId(clickedBar.getBarId());
+                        newFav.setUserId(currUser.getId());
+                        favoriteBarsDao.insert(newFav);
+                    }
+
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                }
+            }.execute();
+        // delete that ho
+        } else {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
+                    BarsDao barsDao = db.barsDao();
+                    UsersDao usersDao = db.usersDao();
+                    UsersFavoriteBarsDao favoriteBarsDao = db.favoritesDao();
+                    Users currUser = usersDao.getUser(username);
+                    Bars clickedBar = barsDao.getBar(barName);
+
+                    if (currUser != null & clickedBar != null) {
+                        favoriteBarsDao.delete(currUser.getId(), clickedBar.getBarId());
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                }
+            }.execute();
+        }
     }
 }

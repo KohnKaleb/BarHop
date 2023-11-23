@@ -8,10 +8,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Users.class, Bars.class}, version = 2, exportSchema = false)
+@Database(entities = {Users.class, Bars.class, UsersFriends.class, UsersFavoriteBars.class}, version = 4, exportSchema = false)
 public abstract class BarHopDatabase extends RoomDatabase {
     public abstract UsersDao usersDao();
     public abstract BarsDao barsDao();
+
+    public abstract UsersFriendsDao friendsDao();
+
+    public abstract UsersFavoriteBarsDao favoritesDao();
 
     private static BarHopDatabase INSTANCE;
 
