@@ -35,8 +35,8 @@ public class userLogin extends AppCompatActivity implements LoginResultListener 
         startActivity(intent);
     }
 
-    private void validateLogin(String username, String login) {
-        DatabaseQueryTask databaseQueryTask = new DatabaseQueryTask(this, username, login, this);
+    private void validateLogin(String username, String password) {
+        DatabaseQueryTask databaseQueryTask = new DatabaseQueryTask(this, username, password, this);
         databaseQueryTask.execute();
     }
 

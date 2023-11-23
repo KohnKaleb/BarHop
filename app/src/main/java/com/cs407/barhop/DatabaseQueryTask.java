@@ -33,7 +33,7 @@ public class DatabaseQueryTask extends AsyncTask<Void, Void, UsernameAndPassword
         if (userInfo.getUser() == null) {
             Toast.makeText(context, "User not found!", Toast.LENGTH_SHORT).show();
         } else {
-            if  (userInfo.getUser().getPassword() != userInfo.getPassword()) {
+            if  (!userInfo.getUser().getPassword().equals(userInfo.getPassword())) {
                 Toast.makeText(context, "wrong password!", Toast.LENGTH_SHORT).show();
             } else {
                 resultListener.onLoginSuccess();
