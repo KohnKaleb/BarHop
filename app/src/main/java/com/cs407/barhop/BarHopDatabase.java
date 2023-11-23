@@ -8,7 +8,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Users.class, Bars.class}, version = 1, exportSchema = false)
+@Database(entities = {Users.class, Bars.class}, version = 2, exportSchema = false)
 public abstract class BarHopDatabase extends RoomDatabase {
     public abstract UsersDao usersDao();
     public abstract BarsDao barsDao();
@@ -21,7 +21,7 @@ public abstract class BarHopDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     BarHopDatabase.class, "bar_hop_database")
-                            .allowMainThreadQueries().build();
+                            .allowMainThreadQueries().fallbackToDestructiveMigration().build();
                 }
             }
         }

@@ -11,6 +11,9 @@ public class Users {
     @ColumnInfo(name = "userName")
     private String userName;
 
+    @ColumnInfo(name = "password")
+    private String password;
+
     /* getters and setters */
     public String getUserName() {
         return userName;
@@ -20,11 +23,13 @@ public class Users {
         this.userName = userName;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 }
