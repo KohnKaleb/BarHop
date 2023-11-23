@@ -87,69 +87,69 @@ public class MainActivity extends AppCompatActivity {
                     // All below can be deleted after we decide the database defined
                     // below has all necessary components
                     Bars redRock = new Bars();
-                    redRock.setDescription("cool");
+                    redRock.setDescription("Vibrant late-night saloon features a full bar, classic BBQ meals & live country music every Friday.");
                     redRock.setName("Red Rock Saloon");
                     barsDao.insert(redRock);
 
                     Bars whiskeys = new Bars();
-                    whiskeys.setDescription("cool");
+                    whiskeys.setDescription("Wild West-theme saloon with big dance floor, mechanical bull & live music plus many beers on draft.");
                     whiskeys.setName("Whiskey Jack's Saloon");
                     barsDao.insert(whiskeys);
 
                     Bars chasers = new Bars();
-                    chasers.setDescription("cool");
+                    chasers.setDescription("High-energy, college sports bar with a 3rd floor rooftop patio. Join us at Chasers 2.0 for a party good time.");
                     chasers.setName("Chasers");
                     barsDao.insert(chasers);
 
                     Bars mondays = new Bars();
-                    mondays.setDescription("cool");
+                    mondays.setDescription("Known for its strong drinks, this watering hole offers a lively atmosphere in an unassuming setting.");
                     mondays.setName("Mondays");
                     barsDao.insert(mondays);
 
                     Bars dannys = new Bars();
-                    dannys.setDescription("cool");
+                    dannys.setDescription("Irish Pub style bar serving beer & spirits as well as burgers, sandwiches, salads, and comfort food.");
                     dannys.setName("Danny's Pub");
                     barsDao.insert(dannys);
 
                     Bars mackeseys = new Bars();
-                    mackeseys.setDescription("cool");
+                    mackeseys.setDescription("Old-school Irish tavern in a vintage building offering draft beer & a loaded jukebox.\n");
                     mackeseys.setName("Mackesey's Irish Pub");
                     barsDao.insert(mackeseys);
 
                     Bars plaza = new Bars();
-                    plaza.setDescription("cool");
+                    plaza.setDescription("Old-time bar & grill slinging signature burgers & beer until late, with daily drink specials.");
                     plaza.setName("The Plaza Tavern");
                     barsDao.insert(plaza);
 
                     Bars cask = new Bars();
-                    cask.setDescription("cool");
+                    cask.setDescription("Casual cocktail bar in pared-down quarters features a big whiskey menu & rotating craft taps.");
                     cask.setName("Cask & Ale");
                     barsDao.insert(cask);
 
                     Bars pauls = new Bars();
-                    pauls.setDescription("cool");
+                    pauls.setDescription("Lively watering hole boasting a large tree inside offering draft beers & a jukebox.");
                     pauls.setName("Paul's Club");
                     barsDao.insert(pauls);
 
                     Bars silver = new Bars();
-                    silver.setDescription("cool");
+                    silver.setDescription("Cash-only neighborhood tavern offering drinks & shuffleboard in a cozy, old-school atmosphere.");
                     silver.setName("Silver Dollar Tavern");
                     barsDao.insert(silver);
 
                     Bars coopers = new Bars();
-                    coopers.setDescription("cool");
+                    coopers.setDescription("Upscale Irish tavern serving pub grub & international beer & wine in a warm, contemporary venue.");
                     coopers.setName("The Coopers Tavern");
                     barsDao.insert(coopers);
 
                     Bars gennas = new Bars();
-                    gennas.setDescription("cool");
+                    gennas.setDescription("Rollicking haunt offering a capitol view from its outdoor patio, plus cocktails & a rotating tap.");
                     gennas.setName("Genna's Lounge");
                     barsDao.insert(gennas);
 
                     Bars paradise = new Bars();
-                    paradise.setDescription("cool");
+                    paradise.setDescription("Classic bar with a pool table serving burgers & sandwiches amid wood-paneled walls & casual digs.");
                     paradise.setName("Paradise Lounge");
-                    barsDao.insert(redRock);
+                    barsDao.insert(paradise);
                 }
 
                 // Retrieve data after populating the database
@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 List<Bars> bars = barsDao.getAllEntities();
                 int count = 0;
                 for(Bars b: bars){
-                    Log.e("please", b.getName());
                     TextView name = new TextView(getBaseContext());
                     name.setText(b.getName());
                     name.setTextSize(34);
@@ -207,8 +206,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     horizontal.addView(heartButton);
-//                    Button favorite = new Button(getBaseContext());
-//                    favorite.setBackground("@drawable/baseline_favorite_24");
                     ll.addView(horizontal);
                     Space space = new Space(getBaseContext());
                     space.setMinimumHeight(20);
