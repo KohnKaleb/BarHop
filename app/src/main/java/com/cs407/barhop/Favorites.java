@@ -18,17 +18,24 @@ import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Favorites extends AppCompatActivity {
 
     ImageView xIcon;
     private BarsDao barsDao;
+    private UsersDao usersDao;
+
+    private String username;
+
+    private UsersFavoriteBarsDao usersFavoriteBarsDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
+        username = getIntent().getStringExtra("username");
         populateAndRetrieveData();
     }
 
@@ -41,6 +48,8 @@ public class Favorites extends AppCompatActivity {
                 BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
 
                 // Access the DAO
+                usersFavoriteBarsDao = database.favoritesDao();
+                usersDao = database.usersDao();
                 barsDao = database.barsDao();
 
                 // Retrieve data after populating the database
@@ -54,10 +63,18 @@ public class Favorites extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View v = inflater.inflate(R.layout.activity_favorites, null);
                 LinearLayout ll = v.findViewById(R.id.favoritesLayout);
-                List<Bars> bars = barsDao.getAllEntities();
-                Log.e("bars", bars.toString());
+                Users currUser = usersDao.getUser(username);
+                List<UsersFavoriteBars> favorites = usersFavoriteBarsDao.getFavoriteBars(currUser.getId());
+                List<Bars> favoriteBars = new ArrayList<>();
+
+                for (UsersFavoriteBars favorite : favorites) {
+                    Bars bar = barsDao.getBarById(favorite.getBarId());
+                    favoriteBars.add(bar);
+                }
+
+                Log.e("bars", favorites.toString());
                 int count = 0;
-                for(Bars b: bars){
+                for(Bars b: favoriteBars){
                     // TODO when favorites is implemented just change if case
                     if(b.getName() == b.getName()) {
                         TextView name = new TextView(getBaseContext());

@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -193,11 +194,14 @@ public class MainActivity extends AppCompatActivity {
                     horizontal.addView(viewMore);
                     ImageButton heartButton = new ImageButton(getBaseContext());
                     heartButton.setBackgroundResource(R.drawable.gray_heart);
+                    heartButton.setTag(b);
                     heartButton.setOnClickListener(new View.OnClickListener() {
+                        Bars clickedBar;
                         boolean isGray = true;
-                        Bars clickedBar = (Bars) v.getTag();
                         @Override
                         public void onClick(View v) {
+                            clickedBar = (Bars) v.getTag();
+                            
                             if (isGray) {
                                 heartButton.setBackgroundResource(R.drawable.red_heart);
                                 isGray = false;
@@ -246,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, UserLogin.class);
         }
 
+        intent.putExtra("username", username);
         startActivity(intent);
 
         return true;

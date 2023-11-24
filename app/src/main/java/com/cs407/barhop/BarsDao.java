@@ -20,4 +20,7 @@ public interface BarsDao {
 
     @Query("SELECT * FROM bars WHERE name = :barName")
     Bars getBar(String barName);
+
+    @Query("SELECT * FROM bars WHERE barId = :barId")
+    Bars getBarById(int barId);
 }
