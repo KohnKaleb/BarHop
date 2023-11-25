@@ -2,8 +2,10 @@ package com.cs407.barhop;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -28,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -167,16 +171,16 @@ public class MainActivity extends AppCompatActivity {
                 // Handle any UI updates or further processing here
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View v = inflater.inflate(R.layout.activity_main, null);
-                ScrollView sv = v.findViewById(R.id.scrollView);
-                LinearLayout ll = new LinearLayout(getBaseContext());
-                ll.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout ll = v.findViewById(R.id.parentLayout);
                 List<Bars> bars = barsDao.getAllEntities();
                 int count = 0;
                 for(Bars b: bars){
+                    LinearLayout barLayout = new LinearLayout(getBaseContext());
+                    barLayout.setOrientation(LinearLayout.VERTICAL);
                     TextView name = new TextView(getBaseContext());
                     name.setText(b.getName());
                     name.setTextSize(34);
-                    ll.addView(name);
+                    barLayout.addView(name);
                     LinearLayout horizontal = new LinearLayout(getBaseContext());
                     horizontal.setOrientation(LinearLayout.HORIZONTAL);
                     TextView friends = new TextView(getBaseContext());
@@ -227,13 +231,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     horizontal.addView(heartButton);
-                    ll.addView(horizontal);
+                    barLayout.addView(horizontal);
                     Space space = new Space(getBaseContext());
                     space.setMinimumHeight(20);
-                    ll.addView(space);
+                    barLayout.addView(space);
+                    barLayout.setId(count);
                     count++;
+                    ll.addView(barLayout);
                 }
-                sv.addView(ll);
                 setContentView(v);
             }
         }.execute();
@@ -244,6 +249,47 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        MenuItem searchViewItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+             /*   if(list.contains(query)){
+                    adapter.getFilter().filter(query);
+                }else{
+                    Toast.makeText(MainActivity.this, "No Match found",Toast.LENGTH_LONG).show();
+                }*/
+                return false;
+
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View v = inflater.inflate(R.layout.activity_main, null);
+                LinearLayout ll = v.findViewById(R.id.parentLayout);
+                for(int i = 0; i < barsDao.getAllEntities().size(); i++) {
+                    // In this loop we need to somehow loop through each barLayout created in on execute
+                    // we then check if the text contains newText and set their visibility accordingly
+//                    LinearLayout currLayout = (LinearLayout) ll.getChildAt(i);
+//                    TextView text = (TextView) currLayout.getChildAt(0);
+//                    Log.e("Equals?", newText + ", " + text.getText());
+//                    if (!(text.getText().toString().contains(newText))) {
+//
+//                        ll.getChildAt(i).setVisibility(View.GONE);
+//
+//                        Log.v("Buttons To Disappear", (String) text.getText());
+//
+//                    } else {
+//
+//                        ll.getChildAt(i).setVisibility(View.VISIBLE);
+//
+//                    }
+                }
+                return false;
+            }
+        });
         return true;
     }
 
