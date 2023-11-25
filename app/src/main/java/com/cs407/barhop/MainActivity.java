@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BarHopDatabase barhopDatabase;
     private BarsDao barsDao;
-
+    private UsersFavoriteBarsDao favoriteBarsDao;
+    private UsersDao usersDao;
     private String username;
 
     @Override
@@ -82,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Access the DAO
                 barsDao = database.barsDao();
-                barsDao.deleteAll();
+                favoriteBarsDao = database.favoritesDao();
+                usersDao = database.usersDao();
                 // Check if the database is empty
                 if (barsDao.getAllEntities().size() == 0) {
                     // If empty, populate the database
@@ -193,13 +195,24 @@ public class MainActivity extends AppCompatActivity {
                     });
                     horizontal.addView(viewMore);
                     ImageButton heartButton = new ImageButton(getBaseContext());
-                    heartButton.setBackgroundResource(R.drawable.gray_heart);
+                    List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
+                    UsersFavoriteBars thisBar = new UsersFavoriteBars(usersDao.getUser(username).getId(), b.getBarId());
+                    if(favorites.contains(thisBar)) {
+                        heartButton.setBackgroundResource(R.drawable.red_heart);
+                    } else {
+                        heartButton.setBackgroundResource(R.drawable.gray_heart);
+                    }
                     heartButton.setTag(b);
                     heartButton.setOnClickListener(new View.OnClickListener() {
                         Bars clickedBar;
-                        boolean isGray = true;
+                        boolean isGray;
                         @Override
                         public void onClick(View v) {
+                            if(favorites.contains(thisBar)) {
+                                isGray = false;
+                            } else {
+                                isGray = true;
+                            }
                             clickedBar = (Bars) v.getTag();
                             
                             if (isGray) {
@@ -294,17 +307,11 @@ public class MainActivity extends AppCompatActivity {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
-                    BarsDao barsDao = db.barsDao();
-                    UsersDao usersDao = db.usersDao();
-                    UsersFavoriteBarsDao favoriteBarsDao = db.favoritesDao();
                     Users currUser = usersDao.getUser(username);
                     Bars clickedBar = barsDao.getBar(barName);
 
                     if (currUser != null && clickedBar != null) {
-                        UsersFavoriteBars newFav = new UsersFavoriteBars();
-                        newFav.setBarId(clickedBar.getBarId());
-                        newFav.setUserId(currUser.getId());
+                        UsersFavoriteBars newFav = new UsersFavoriteBars(currUser.getId(), clickedBar.getBarId());
                         favoriteBarsDao.insert(newFav);
                     }
 
@@ -321,10 +328,6 @@ public class MainActivity extends AppCompatActivity {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
-                    BarsDao barsDao = db.barsDao();
-                    UsersDao usersDao = db.usersDao();
-                    UsersFavoriteBarsDao favoriteBarsDao = db.favoritesDao();
                     Users currUser = usersDao.getUser(username);
                     Bars clickedBar = barsDao.getBar(barName);
 

@@ -19,6 +19,14 @@ public class UsersFavoriteBars {
     public int userId;
     public int barId;
 
+    public UsersFavoriteBars() {
+
+    }
+    public UsersFavoriteBars(int userId, int barId){
+        this.userId = userId;
+        this.barId = barId;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -33,5 +41,15 @@ public class UsersFavoriteBars {
 
     public void setBarId(int barId) {
         this.barId = barId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        UsersFavoriteBars b = (UsersFavoriteBars) o;
+        if (b.getBarId() == this.getBarId() && b.getUserId() == this.getUserId()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

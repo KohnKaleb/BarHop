@@ -75,52 +75,54 @@ public class Favorites extends AppCompatActivity {
                 Log.e("bars", favorites.toString());
                 int count = 0;
                 for(Bars b: favoriteBars){
-                    // TODO when favorites is implemented just change if case
-                    if(b.getName() == b.getName()) {
-                        TextView name = new TextView(getBaseContext());
-                        name.setText(b.getName());
-                        name.setTextSize(34);
-                        ll.addView(name);
-                        LinearLayout horizontal = new LinearLayout(getBaseContext());
-                        horizontal.setOrientation(LinearLayout.HORIZONTAL);
-                        TextView friends = new TextView(getBaseContext());
-                        friends.setText("# friends");
-                        friends.setTextSize(28);
-                        horizontal.addView(friends);
-                        Button viewMore = new Button(getBaseContext());
-                        viewMore.setText("View More");
-                        viewMore.setWidth(400);
-                        viewMore.setId(count);
-                        viewMore.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                viewMore(v);
-                            }
-                        });
-                        horizontal.addView(viewMore);
-                        ImageButton heartButton = new ImageButton(getBaseContext());
-                        heartButton.setBackgroundResource(R.drawable.gray_heart);
-                        heartButton.setOnClickListener(new View.OnClickListener() {
-                            boolean isGray = true;
+                    TextView name = new TextView(getBaseContext());
+                    name.setText(b.getName());
+                    name.setTextSize(34);
+                    ll.addView(name);
+                    LinearLayout horizontal = new LinearLayout(getBaseContext());
+                    horizontal.setOrientation(LinearLayout.HORIZONTAL);
+                    TextView friends = new TextView(getBaseContext());
+                    friends.setText("# friends");
+                    friends.setTextSize(28);
+                    horizontal.addView(friends);
+                    Button viewMore = new Button(getBaseContext());
+                    viewMore.setText("View More");
+                    viewMore.setWidth(400);
+                    viewMore.setId(count);
+                    viewMore.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewMore(v);
+                        }
+                    });
+                    horizontal.addView(viewMore);
+                    ImageButton heartButton = new ImageButton(getBaseContext());
+                    heartButton.setBackgroundResource(R.drawable.red_heart);
+                    heartButton.setTag(b);
+                    heartButton.setOnClickListener(new View.OnClickListener() {
+                        boolean isGray = false;
+                        Bars clickedBar;
+                        @Override
+                        public void onClick(View v) {
+                            clickedBar = (Bars) v.getTag();
 
-                            @Override
-                            public void onClick(View v) {
-                                if (isGray) {
-                                    heartButton.setBackgroundResource(R.drawable.red_heart);
-                                    isGray = false;
-                                } else {
-                                    heartButton.setBackgroundResource(R.drawable.gray_heart);
-                                    isGray = true;
-                                }
-                                // TODO update database on foat on god
+                            if (isGray) {
+                                heartButton.setBackgroundResource(R.drawable.red_heart);
+                                isGray = false;
+                                addFavoriteBar(true, clickedBar.getName());
+                            } else {
+                                heartButton.setBackgroundResource(R.drawable.gray_heart);
+                                isGray = true;
+                                addFavoriteBar(false, clickedBar.getName());
                             }
-                        });
-                        horizontal.addView(heartButton);
-                        ll.addView(horizontal);
-                        Space space = new Space(getBaseContext());
-                        space.setMinimumHeight(20);
-                        ll.addView(space);
-                    }
+                            // TODO update database on foat on god
+                        }
+                    });
+                    horizontal.addView(heartButton);
+                    ll.addView(horizontal);
+                    Space space = new Space(getBaseContext());
+                    space.setMinimumHeight(20);
+                    ll.addView(space);
                     count++;
                 }
                 setContentView(v);
@@ -130,6 +132,7 @@ public class Favorites extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Favorites.this, MainActivity.class);
+                        intent.putExtra("username", username);
                         startActivity(intent);
                     }
                 });
@@ -144,5 +147,58 @@ public class Favorites extends AppCompatActivity {
         intent.putExtra("title", currBar.getName());
         intent.putExtra("description", currBar.getDescription());
         startActivity(intent);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void addFavoriteBar(Boolean isAdd, String barName) {
+        // add favorite to database
+        if (isAdd) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
+                    BarsDao barsDao = db.barsDao();
+                    UsersDao usersDao = db.usersDao();
+                    UsersFavoriteBarsDao favoriteBarsDao = db.favoritesDao();
+                    Users currUser = usersDao.getUser(username);
+                    Bars clickedBar = barsDao.getBar(barName);
+
+                    if (currUser != null && clickedBar != null) {
+                        UsersFavoriteBars newFav = new UsersFavoriteBars(currUser.getId(), clickedBar.getBarId());
+                        favoriteBarsDao.insert(newFav);
+                    }
+
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                }
+            }.execute();
+            // delete that ho
+        } else {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
+                    BarsDao barsDao = db.barsDao();
+                    UsersDao usersDao = db.usersDao();
+                    UsersFavoriteBarsDao favoriteBarsDao = db.favoritesDao();
+                    Users currUser = usersDao.getUser(username);
+                    Bars clickedBar = barsDao.getBar(barName);
+
+                    if (currUser != null & clickedBar != null) {
+                        favoriteBarsDao.delete(currUser.getId(), clickedBar.getBarId());
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                }
+            }.execute();
+        }
     }
 }
