@@ -19,6 +19,11 @@ public class UsersFriends {
     public int userId;
     public int friendId;
 
+    public UsersFriends(int userId, int friendId){
+        this.userId = userId;
+        this.friendId = friendId;
+    }
+
     public int getUserId() {
         return userId;
     }
