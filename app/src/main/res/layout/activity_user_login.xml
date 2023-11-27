@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserLogin">
+    tools:context=".UserLogin"
+    android:background="@color/loginBackgroundColor">
 
     <EditText
         android:id="@+id/username"
@@ -12,7 +13,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="329dp"
         android:layout_marginBottom="48dp"
-        android:hint="username"
+        android:hint="@string/login_username"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginBottom="267dp"
-        android:hint="Password"
+        android:hint="@string/login_password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/username"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
         android:onClick="login"
-        android:text="Login"
+        android:text="@string/login_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:onClick="signup"
-        android:text="Signup"
+        android:text="@string/signup_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />

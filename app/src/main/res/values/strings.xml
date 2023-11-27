@@ -18,4 +18,8 @@
     <string name="favorites_header">Your Favorites</string>
     <string name="history_header">History</string>
     <string name="profile_header">Profile</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_btn">Login</string>
+    <string name="signup_btn">Signup</string>
 </resources>
