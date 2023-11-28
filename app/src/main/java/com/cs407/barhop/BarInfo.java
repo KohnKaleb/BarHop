@@ -3,6 +3,7 @@ package com.cs407.barhop;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,4 +33,16 @@ public class BarInfo extends AppCompatActivity{
             }
         });
     }
+
+    private void bringUserToMaps(double lat, double lng, String resturantName) {
+        String uri = "http://maps.google.com/maps?daddr=" + lat + "," + lng + " (" + resturantName + ")";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            // TODO they don't have google mpas installed, figure out what to do
+        }
+    }
+
 }

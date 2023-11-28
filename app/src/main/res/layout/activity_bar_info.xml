@@ -52,10 +52,24 @@
             <TextView
                 android:id="@+id/barDescription"
                 android:layout_width="379dp"
-                android:layout_height="469dp"
+                android:layout_height="356dp"
                 android:gravity="center_horizontal"
                 android:text="Description"
                 android:textSize="28sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="120dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
     </ScrollView>
 

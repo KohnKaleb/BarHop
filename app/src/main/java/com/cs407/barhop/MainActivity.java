@@ -98,66 +98,91 @@ public class MainActivity extends AppCompatActivity {
                     Bars redRock = new Bars();
                     redRock.setDescription("Vibrant late-night saloon features a full bar, classic BBQ meals & live country music every Friday.");
                     redRock.setName("Red Rock Saloon");
+                    redRock.setLatitude(String.valueOf(43.07511228080476));
+                    redRock.setLongitude(String.valueOf(-89.39180943517987));
                     barsDao.insert(redRock);
-
                     Bars whiskeys = new Bars();
                     whiskeys.setDescription("Wild West-theme saloon with big dance floor, mechanical bull & live music plus many beers on draft.");
                     whiskeys.setName("Whiskey Jack's Saloon");
+                    whiskeys.setLatitude(String.valueOf(43.07514951074125));
+                    whiskeys.setLongitude(String.valueOf(-89.39478570397267));
                     barsDao.insert(whiskeys);
 
                     Bars chasers = new Bars();
                     chasers.setDescription("High-energy, college sports bar with a 3rd floor rooftop patio. Join us at Chasers 2.0 for a party good time.");
                     chasers.setName("Chasers");
+                    chasers.setLatitude(String.valueOf(43.075183888757564));
+                    chasers.setLongitude(String.valueOf(-89.39183286164364));
                     barsDao.insert(chasers);
 
                     Bars mondays = new Bars();
                     mondays.setDescription("Known for its strong drinks, this watering hole offers a lively atmosphere in an unassuming setting.");
                     mondays.setName("Mondays");
+                    mondays.setLatitude(String.valueOf(43.07479730054148));
+                    mondays.setLongitude(String.valueOf(-89.39459311746627));
                     barsDao.insert(mondays);
 
                     Bars dannys = new Bars();
                     dannys.setDescription("Irish Pub style bar serving beer & spirits as well as burgers, sandwiches, salads, and comfort food.");
                     dannys.setName("Danny's Pub");
+                    dannys.setLatitude(String.valueOf(43.074513775296516));
+                    dannys.setLongitude(String.valueOf(-89.3926244769856));
                     barsDao.insert(dannys);
 
                     Bars mackeseys = new Bars();
                     mackeseys.setDescription("Old-school Irish tavern in a vintage building offering draft beer & a loaded jukebox.\n");
                     mackeseys.setName("Mackesey's Irish Pub");
+                    mackeseys.setLatitude(String.valueOf(43.07482487454057));
+                    mackeseys.setLongitude(String.valueOf(-89.39086590397277));
                     barsDao.insert(mackeseys);
 
                     Bars plaza = new Bars();
                     plaza.setDescription("Old-time bar & grill slinging signature burgers & beer until late, with daily drink specials.");
                     plaza.setName("The Plaza Tavern");
+                    plaza.setLatitude(String.valueOf(43.07584318697106));
+                    plaza.setLongitude(String.valueOf(-89.39056555461406));
                     barsDao.insert(plaza);
 
                     Bars cask = new Bars();
                     cask.setDescription("Casual cocktail bar in pared-down quarters features a big whiskey menu & rotating craft taps.");
                     cask.setName("Cask & Ale");
+                    cask.setLatitude(String.valueOf(43.07501164810205));
+                    cask.setLongitude(String.valueOf(-89.38859446164363));
                     barsDao.insert(cask);
 
                     Bars pauls = new Bars();
                     pauls.setDescription("Lively watering hole boasting a large tree inside offering draft beers & a jukebox.");
                     pauls.setName("Paul's Club");
+                    pauls.setLatitude(String.valueOf(43.07514739571071));
+                    pauls.setLongitude(String.valueOf(-89.38841837698553));
                     barsDao.insert(pauls);
 
                     Bars silver = new Bars();
                     silver.setDescription("Cash-only neighborhood tavern offering drinks & shuffleboard in a cozy, old-school atmosphere.");
                     silver.setName("Silver Dollar Tavern");
+                    silver.setLatitude(String.valueOf(43.07444192379716));
+                    silver.setLongitude(String.valueOf(-89.38695904815008));
                     barsDao.insert(silver);
 
                     Bars coopers = new Bars();
                     coopers.setDescription("Upscale Irish tavern serving pub grub & international beer & wine in a warm, contemporary venue.");
                     coopers.setName("The Coopers Tavern");
+                    coopers.setLatitude(String.valueOf(43.075302395215154));
+                    coopers.setLongitude(String.valueOf(-89.38620239047908));
                     barsDao.insert(coopers);
 
                     Bars gennas = new Bars();
                     gennas.setDescription("Rollicking haunt offering a capitol view from its outdoor patio, plus cocktails & a rotating tap.");
                     gennas.setName("Genna's Lounge");
+                    gennas.setLatitude(String.valueOf(43.07287913015886));
+                    gennas.setLongitude(String.valueOf(-89.3843644039728));
                     barsDao.insert(gennas);
 
                     Bars paradise = new Bars();
                     paradise.setDescription("Classic bar with a pool table serving burgers & sandwiches amid wood-paneled walls & casual digs.");
                     paradise.setName("Paradise Lounge");
+                    paradise.setLatitude(String.valueOf(43.07260327848787));
+                    paradise.setLongitude(String.valueOf(-89.38488372301137));
                     barsDao.insert(paradise);
                 }
 
