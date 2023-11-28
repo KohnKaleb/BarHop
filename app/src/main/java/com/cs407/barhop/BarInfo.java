@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 public class BarInfo extends AppCompatActivity{
     ImageView xIcon;
+    public double latitude;
+    public double longitude;
+    public String barName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +21,10 @@ public class BarInfo extends AppCompatActivity{
 
         Intent givenIntent = getIntent();
         String title = givenIntent.getStringExtra("title");
+        barName = title;
+        latitude = Double.parseDouble(givenIntent.getStringExtra("latitude"));
+        longitude = Double.parseDouble(givenIntent.getStringExtra("longitude"));
+
         TextView barTitle = findViewById(R.id.barTitle);
         barTitle.setText(title);
         String description = givenIntent.getStringExtra("description");

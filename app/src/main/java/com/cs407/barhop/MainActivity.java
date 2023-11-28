@@ -346,6 +346,8 @@ public class MainActivity extends AppCompatActivity {
         Bars currBar = bars.get(view.getId());
         intent.putExtra("title", currBar.getName());
         intent.putExtra("description", currBar.getDescription());
+        intent.putExtra("latitude", currBar.getLatitude());
+        intent.putExtra("longitude", currBar.getLongitude());
         startActivity(intent);
     }
 
