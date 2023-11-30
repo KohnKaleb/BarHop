@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private UsersFavoriteBarsDao favoriteBarsDao;
     private UsersDao usersDao;
     private String username;
+    private LinearLayout ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 // Handle any UI updates or further processing here
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View v = inflater.inflate(R.layout.activity_main, null);
-                LinearLayout ll = v.findViewById(R.id.parentLayout);
+                ll = v.findViewById(R.id.parentLayout);
                 List<Bars> bars = barsDao.getAllEntities();
                 int count = 0;
                 for(Bars b: bars){
@@ -291,26 +292,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View v = inflater.inflate(R.layout.activity_main, null);
-                LinearLayout ll = v.findViewById(R.id.parentLayout);
                 for(int i = 0; i < barsDao.getAllEntities().size(); i++) {
-                    // In this loop we need to somehow loop through each barLayout created in on execute
-                    // we then check if the text contains newText and set their visibility accordingly
-//                    LinearLayout currLayout = (LinearLayout) ll.getChildAt(i);
-//                    TextView text = (TextView) currLayout.getChildAt(0);
-//                    Log.e("Equals?", newText + ", " + text.getText());
-//                    if (!(text.getText().toString().contains(newText))) {
-//
-//                        ll.getChildAt(i).setVisibility(View.GONE);
-//
-//                        Log.v("Buttons To Disappear", (String) text.getText());
-//
-//                    } else {
-//
-//                        ll.getChildAt(i).setVisibility(View.VISIBLE);
-//
-//                    }
+                    LinearLayout currLayout = (LinearLayout) ll.getChildAt(i);
+                    TextView text = (TextView) currLayout.getChildAt(0);
+                    if (!(text.getText().toString().toLowerCase().contains(newText.toLowerCase()))) {
+
+                        ll.getChildAt(i).setVisibility(View.GONE);
+
+                        Log.v("Buttons To Disappear", (String) text.getText());
+
+                    } else {
+
+                        ll.getChildAt(i).setVisibility(View.VISIBLE);
+
+                    }
                 }
                 return false;
             }
