@@ -299,8 +299,6 @@ public class MainActivity extends AppCompatActivity {
 
                         ll.getChildAt(i).setVisibility(View.GONE);
 
-                        Log.v("Buttons To Disappear", (String) text.getText());
-
                     } else {
 
                         ll.getChildAt(i).setVisibility(View.VISIBLE);
