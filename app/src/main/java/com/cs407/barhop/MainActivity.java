@@ -348,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("description", currBar.getDescription());
         intent.putExtra("latitude", currBar.getLatitude());
         intent.putExtra("longitude", currBar.getLongitude());
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
