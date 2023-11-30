@@ -31,14 +31,21 @@ import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
+
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private BarHopDatabase barhopDatabase;
     private BarsDao barsDao;
@@ -47,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     private String username;
     private LinearLayout ll;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+    private static final long MIN_TIME_BETWEEN_UPDATES = 5 * 60000;
+    private static final float MIN_DISTANCE_CHANGE_FOR_UPDATES = 10.0f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         username = getIntent().getStringExtra("username");
         populateAndRetrieveData();
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -69,7 +82,14 @@ public class MainActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            MIN_TIME_BETWEEN_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                            locationListener
+                    );
+                }
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if(location != null) {
                     updateLocationInfo(location);
@@ -238,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                         boolean isGray;
                         @Override
                         public void onClick(View v) {
+                            List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
                             if(favorites.contains(thisBar)) {
                                 isGray = false;
                             } else {
@@ -361,10 +382,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateLocationInfo(Location location) {
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
 
+        List<Bars> bars = barsDao.getAllEntities();
+        for (Bars bar : bars) {
+            double barLatitude = Double.parseDouble(bar.getLatitude());
+            double barLongitude = Double.parseDouble(bar.getLongitude());
+
+            float[] results = new float[1];
+            Location.distanceBetween(currentLatitude, currentLongitude, barLatitude, barLongitude, results);
+            float distanceInMeters = results[0];
+
+            double proximityThreshold = 100;
+            if (distanceInMeters <= proximityThreshold) {
+                updateHistoryInformation(bar);
+            }
+        }
         // TODO: do stuff with the location of the user
         // here is where we will do many fun and interesting things with the users location data!
         // see lab 4 milestone 2 for example
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void updateHistoryInformation(Bars bar) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
+                UsersHistoryDao usersHistoryDao = database.historyDao();
+                UsersDao usersDao = database.usersDao();
+                UsersHistory userHistory = new UsersHistory();
+                int userId = usersDao.getUser(username).getId();
+                Date currentDate = new Date();
+                String currDate = sdf.format(currentDate);
+                bar.setDate(currDate);
+                barsDao.updateBar(bar);
+                userHistory.setUserId(userId);
+                userHistory.setBarId(bar.getBarId());
+                usersHistoryDao.insert(userHistory);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+
+            }
+        }.execute();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -411,4 +476,6 @@ public class MainActivity extends AppCompatActivity {
             }.execute();
         }
     }
+
+
 }

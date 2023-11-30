@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "bars")
 public class Bars {
     @PrimaryKey(autoGenerate = true)
@@ -20,6 +22,9 @@ public class Bars {
 
     @ColumnInfo(name = "longitude")
     private String longitude;
+
+    @ColumnInfo(name = "date")
+    private String date;
 
     /* getters and setters */
     public String getDescription() {return description;}
@@ -55,5 +60,13 @@ public class Bars {
 
     public void setBarId(int barId) {
         this.barId = barId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

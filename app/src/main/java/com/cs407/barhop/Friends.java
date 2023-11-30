@@ -63,6 +63,7 @@ public class Friends extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Friends.this, MainActivity.class);
+                        intent.putExtra("username", username);
                         startActivity(intent);
                     }
                 });

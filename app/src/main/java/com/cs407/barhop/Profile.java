@@ -30,6 +30,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Profile.this, MainActivity.class);
+                intent.putExtra("username", currUser);
                 startActivity(intent);
             }
         });
