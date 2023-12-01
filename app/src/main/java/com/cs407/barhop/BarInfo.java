@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BarInfo extends AppCompatActivity{
-    ImageView xIcon;
     public double latitude;
     public double longitude;
     public String barName;
@@ -44,15 +43,6 @@ public class BarInfo extends AppCompatActivity{
         TextView barDesc = findViewById(R.id.barDescription);
         barDesc.setText(description);
 
-        xIcon = findViewById(R.id.imageViewX);
-        xIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BarInfo.this, MainActivity.class);
-                intent.putExtra("username", username);
-                startActivity(intent);
-            }
-        });
     }
 
     private void bringUserToMaps(View view) {

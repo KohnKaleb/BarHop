@@ -7,17 +7,18 @@
     tools:context=".Profile"
     android:background="@color/backgroundColor">
 
-    <ImageView
-        android:id="@+id/imageViewX"
-        android:layout_width="41dp"
-        android:layout_height="52dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:src="@drawable/img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    Again commented out just incase we need it later
+        <ImageView-->
+<!--        android:id="@+id/imageViewX"-->
+<!--        android:layout_width="41dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:src="@drawable/img"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ScrollView
         android:id="@+id/scrollView"

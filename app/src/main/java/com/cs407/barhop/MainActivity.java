@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -31,8 +32,8 @@ import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
+//import com.google.android.gms.location.FusedLocationProviderClient;
+//import com.google.android.gms.location.LocationServices;
 
 import org.w3c.dom.Text;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
 
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    //private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private BarHopDatabase barhopDatabase;
     private BarsDao barsDao;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         username = getIntent().getStringExtra("username");
         populateAndRetrieveData();
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -221,74 +222,76 @@ public class MainActivity extends AppCompatActivity {
                 List<Bars> bars = barsDao.getAllEntities();
                 int count = 0;
                 for(Bars b: bars){
-                    LinearLayout barLayout = new LinearLayout(getBaseContext());
-                    barLayout.setOrientation(LinearLayout.VERTICAL);
-                    TextView name = new TextView(getBaseContext());
-                    name.setText(b.getName());
-                    name.setTextSize(34);
-                    barLayout.addView(name);
-                    LinearLayout horizontal = new LinearLayout(getBaseContext());
-                    horizontal.setOrientation(LinearLayout.HORIZONTAL);
-                    TextView friends = new TextView(getBaseContext());
-                    friends.setText("# friends");
-                    friends.setTextSize(28);
-                    horizontal.addView(friends);
-                    Button viewMore = new Button(getBaseContext());
-                    viewMore.setText("View More");
-                    viewMore.setWidth(400);
-                    viewMore.setId(count);
-                    viewMore.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            viewMore(v);
-                        }
-                    });
-                    horizontal.addView(viewMore);
-                    ImageButton heartButton = new ImageButton(getBaseContext());
-                    List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
-                    UsersFavoriteBars thisBar = new UsersFavoriteBars(usersDao.getUser(username).getId(), b.getBarId());
-                    if(favorites.contains(thisBar)) {
-                        heartButton.setBackgroundResource(R.drawable.red_heart);
-                    } else {
-                        heartButton.setBackgroundResource(R.drawable.gray_heart);
-                    }
-                    heartButton.setTag(b);
-                    heartButton.setOnClickListener(new View.OnClickListener() {
-                        Bars clickedBar;
-                        boolean isGray;
-                        @Override
-                        public void onClick(View v) {
-                            List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
-                            if(favorites.contains(thisBar)) {
-                                isGray = false;
-                            } else {
-                                isGray = true;
-                            }
-                            clickedBar = (Bars) v.getTag();
-                            
-                            if (isGray) {
-                                heartButton.setBackgroundResource(R.drawable.red_heart);
-                                isGray = false;
-                                addFavoriteBar(true, clickedBar.getName());
-                            } else {
-                                heartButton.setBackgroundResource(R.drawable.gray_heart);
-                                isGray = true;
-                                addFavoriteBar(false, clickedBar.getName());
-                            }
-                        }
-                    });
-                    horizontal.addView(heartButton);
-                    barLayout.addView(horizontal);
-                    Space space = new Space(getBaseContext());
-                    space.setMinimumHeight(20);
-                    barLayout.addView(space);
-                    barLayout.setId(count);
-                    count++;
-                    ll.addView(barLayout);
+                    count = generateBar(ll, b, count);
                 }
                 setContentView(v);
             }
         }.execute();
+    }
+
+    protected int generateBar(LinearLayout linLay, Bars b, int count) {
+        LinearLayout barLayout = new LinearLayout(getBaseContext());
+        barLayout.setOrientation(LinearLayout.VERTICAL);
+        TextView name = new TextView(getBaseContext());
+        name.setText(b.getName());
+        name.setTextSize(34);
+        name.setId(count);
+        name.setClickable(true);
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewMore(v);
+            }
+        });
+        barLayout.addView(name);
+        LinearLayout horizontal = new LinearLayout(getBaseContext());
+        horizontal.setOrientation(LinearLayout.HORIZONTAL);
+        TextView friends = new TextView(getBaseContext());
+        friends.setText("# friends");
+        friends.setTextSize(28);
+        horizontal.addView(friends);
+        ImageButton heartButton = new ImageButton(getBaseContext());
+        List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
+        UsersFavoriteBars thisBar = new UsersFavoriteBars(usersDao.getUser(username).getId(), b.getBarId());
+        if(favorites.contains(thisBar)) {
+            heartButton.setBackgroundResource(R.drawable.red_heart);
+        } else {
+            heartButton.setBackgroundResource(R.drawable.gray_heart);
+        }
+        heartButton.setTag(b);
+        heartButton.setOnClickListener(new View.OnClickListener() {
+            Bars clickedBar;
+            boolean isGray;
+            @Override
+            public void onClick(View v) {
+                List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
+                if(favorites.contains(thisBar)) {
+                    isGray = false;
+                } else {
+                    isGray = true;
+                }
+                clickedBar = (Bars) v.getTag();
+
+                if (isGray) {
+                    heartButton.setBackgroundResource(R.drawable.red_heart);
+                    isGray = false;
+                    addFavoriteBar(true, clickedBar.getName());
+                } else {
+                    heartButton.setBackgroundResource(R.drawable.gray_heart);
+                    isGray = true;
+                    addFavoriteBar(false, clickedBar.getName());
+                }
+            }
+        });
+        horizontal.addView(heartButton);
+        barLayout.addView(horizontal);
+        Space space = new Space(getBaseContext());
+        space.setMinimumHeight(20);
+        barLayout.addView(space);
+        barLayout.setId(count);
+        count++;
+        linLay.addView(barLayout);
+        return count;
     }
 
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Profile extends AppCompatActivity {
-    ImageView xIcon;
+//    ImageView xIcon;
     TextView username;
     private UsersDao usersDao;
 
@@ -19,20 +19,21 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        xIcon = findViewById(R.id.imageViewX);
         username = findViewById(R.id.username);
 
         currUser = getIntent().getStringExtra("username");
 
         username.setText("Username: " + currUser);
 
-        xIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile.this, MainActivity.class);
-                intent.putExtra("username", currUser);
-                startActivity(intent);
-            }
-        });
+        // Saved here just incase we need it back
+//        xIcon = findViewById(R.id.imageViewX);
+//        xIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Profile.this, MainActivity.class);
+//                intent.putExtra("username", currUser);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

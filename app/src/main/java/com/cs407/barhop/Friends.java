@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Friends extends AppCompatActivity {
-    ImageView xIcon;
+
     private UsersDao usersDao;
     private UsersFriends usersFriends;
     private String username;
@@ -58,15 +58,7 @@ public class Friends extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
 
-                xIcon = findViewById(R.id.imageViewX);
-                xIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Friends.this, MainActivity.class);
-                        intent.putExtra("username", username);
-                        startActivity(intent);
-                    }
-                });
+
 
             }
         }.execute();
