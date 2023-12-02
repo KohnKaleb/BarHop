@@ -15,6 +15,9 @@ public interface UsersHistoryDao {
     @Query("DELETE FROM usersHistory WHERE userId = :userId AND barId = :barId")
     void delete(int userId, int barId);
 
+    @Query("DELETE FROM usersHistory WHERE userId = :userId")
+    void deleteAll(int userId);
+
     @Query("SELECT * FROM usershistory WHERE userId = :userId")
     List<UsersHistory> getUsersHistory(int userId);
 }
