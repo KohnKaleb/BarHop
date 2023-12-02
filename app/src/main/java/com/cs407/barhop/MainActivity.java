@@ -400,7 +400,7 @@ public class MainActivity extends AppCompatActivity {
             Location.distanceBetween(currentLatitude, currentLongitude, barLatitude, barLongitude, results);
             float distanceInMeters = results[0];
 
-            double proximityThreshold = 10;
+            double proximityThreshold = 6;
             if (distanceInMeters <= proximityThreshold) {
                 updateHistoryInformation(bar);
             }
