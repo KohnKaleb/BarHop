@@ -80,14 +80,15 @@ public class History extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
-                            300000,
-                            5,
+                            0,
+                            0,
                             locationListener
                     );
                 }
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if(location != null) {
                     updateLocationInfo(location);
+                    populateAndRetrieveData();
                 }
             }
         }
@@ -111,6 +112,7 @@ public class History extends AppCompatActivity {
                 updateHistoryInformation(bar);
             }
         }
+        populateAndRetrieveData();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -130,7 +132,6 @@ public class History extends AppCompatActivity {
                 userHistory.setUserId(userId);
                 userHistory.setBarId(bar.getBarId());
                 usersHistoryDao.insert(userHistory);
-                Log.e("test", String.valueOf(usersHistoryDao.getUsersHistory(userId).size()));
 
                 return null;
             }

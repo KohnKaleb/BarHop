@@ -427,7 +427,6 @@ public class MainActivity extends AppCompatActivity {
                 userHistory.setUserId(userId);
                 userHistory.setBarId(bar.getBarId());
                 usersHistoryDao.insert(userHistory);
-                Log.e("test", String.valueOf(usersHistoryDao.getUsersHistory(userId).size()));
 
                 return null;
             }
