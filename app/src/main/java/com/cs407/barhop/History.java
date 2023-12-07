@@ -81,7 +81,7 @@ public class History extends AppCompatActivity {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
                             0,
-                            5,
+                            6,
                             locationListener
                     );
                 }
@@ -222,8 +222,14 @@ public class History extends AppCompatActivity {
                         clearHistory(username);
                     }
                 });
-                clearHistory.setText("Clear History");
-                ll.addView(clearHistory);
+                if (history.size() != 0) {
+                    clearHistory.setText("Clear History");
+                    ll.addView(clearHistory);
+                } else {
+                    TextView emptyMsg = new TextView(getBaseContext());
+                    emptyMsg.setText("You have no history to show!");
+                    ll.addView(emptyMsg);
+                }
                 setContentView(v);
             }
         }.execute();
