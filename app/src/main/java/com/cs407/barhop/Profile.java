@@ -27,7 +27,22 @@ public class Profile extends AppCompatActivity {
 
         currUser = getIntent().getStringExtra("username");
 
-        username.setText("Username: " + currUser);
+        username.setText(currUser);
+
+
+        // Saved here just incase we need it back
+//        xIcon = findViewById(R.id.imageViewX);
+//        xIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Profile.this, MainActivity.class);
+//                intent.putExtra("username", currUser);
+//                startActivity(intent);
+//            }
+//        });
+    }
+
+    public void changePhoto() {
 
         // Registers a photo picker activity launcher in single-select mode.
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
@@ -66,16 +81,5 @@ public class Profile extends AppCompatActivity {
                 .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
                 .build());
 
-
-        // Saved here just incase we need it back
-//        xIcon = findViewById(R.id.imageViewX);
-//        xIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Profile.this, MainActivity.class);
-//                intent.putExtra("username", currUser);
-//                startActivity(intent);
-//            }
-//        });
     }
 }
