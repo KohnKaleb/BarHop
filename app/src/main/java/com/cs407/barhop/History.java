@@ -81,7 +81,7 @@ public class History extends AppCompatActivity {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
                             0,
-                            0,
+                            5,
                             locationListener
                     );
                 }
@@ -95,6 +95,7 @@ public class History extends AppCompatActivity {
     }
 
     public void updateLocationInfo(Location location) {
+        Log.e("test", "test");
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
 
