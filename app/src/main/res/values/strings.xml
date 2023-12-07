@@ -23,5 +23,5 @@
     <string name="login_btn">Login</string>
     <string name="signup_btn">Signup</string>
     <string name="welcome_text">Welcome to BarHop!</string>
-    <string name="welcome_text2">Please log or sign up to continue</string>
+    <string name="welcome_text2">Please login or sign up to continue.</string>
 </resources>
