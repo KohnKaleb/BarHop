@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,7 +68,6 @@ public class History extends AppCompatActivity {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 updateLocationInfo(location);
-                populateAndRetrieveData();
             }
         };
 
@@ -81,20 +81,20 @@ public class History extends AppCompatActivity {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
                             0,
-                            0,
+                            6,
                             locationListener
                     );
                 }
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if(location != null) {
                     updateLocationInfo(location);
-                    populateAndRetrieveData();
                 }
             }
         }
     }
 
     public void updateLocationInfo(Location location) {
+        Log.e("test", "test");
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
 
@@ -112,7 +112,12 @@ public class History extends AppCompatActivity {
                 updateHistoryInformation(bar);
             }
         }
-        populateAndRetrieveData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                populateAndRetrieveData();
+            }
+        }, 500); // You can adjust the delay time as needed
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -138,7 +143,13 @@ public class History extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                populateAndRetrieveData();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        populateAndRetrieveData();
+                    }
+                }, 500); // You can adjust the delay time as neededpopulateAndRetrieveData();
             }
         }.execute();
     }
@@ -221,8 +232,15 @@ public class History extends AppCompatActivity {
                         clearHistory(username);
                     }
                 });
-                clearHistory.setText("Clear History");
-                ll.addView(clearHistory);
+                if (history.size() != 0) {
+                    clearHistory.setText("Clear History");
+                    ll.addView(clearHistory);
+                } else {
+                    TextView emptyMsg = new TextView(getBaseContext());
+                    emptyMsg.setText("You have no history to show!");
+                    emptyMsg.setTextSize(50);
+                    ll.addView(emptyMsg);
+                }
                 setContentView(v);
             }
         }.execute();
@@ -249,7 +267,7 @@ public class History extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                for(int i = 0; i < ll.getChildCount(); i++) {
+                for(int i = 0; i < ll.getChildCount() - 1; i++) {
                     LinearLayout currLayout = (LinearLayout) ll.getChildAt(i);
                     TextView text = (TextView) currLayout.getChildAt(0);
                     if (!(text.getText().toString().toLowerCase().contains(newText.toLowerCase()))) {

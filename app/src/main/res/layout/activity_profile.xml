@@ -37,28 +37,50 @@
 
             <TextView
                 android:id="@+id/profileHeader"
+                style="@style/HeaderStyles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_header"
-                style="@style/HeaderStyles"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="78dp" />
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@tools:sample/avatars" />-->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/badger" />
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/imageButton"-->
+<!--                android:layout_width="179dp"-->
+<!--                android:layout_height="138dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:src="@drawable/badger"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <Button
+                android:id="@+id/changePhoto"
+                android:layout_width="325dp"
+                android:layout_height="53dp"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:layout_margin="45dp"
+                android:text="@string/change_photo" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="93dp"
+                android:paddingTop="50px"
+                android:paddingBottom="50px"
                 android:text=""
                 android:textAlignment="center"
                 android:textSize="34sp"
-                android:paddingBottom="50px"
-                android:paddingTop="50px"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="78dp" />
 

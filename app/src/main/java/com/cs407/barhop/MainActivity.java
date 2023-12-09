@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
                             0,
-                            0,
+                            6,
                             locationListener
                     );
                 }
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateLocationInfo(Location location) {
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
-
+        Log.e("test", "test");
         List<Bars> bars = barsDao.getAllEntities();
         for (Bars bar : bars) {
             double barLatitude = Double.parseDouble(bar.getLatitude());
