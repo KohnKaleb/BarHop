@@ -9,15 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -64,9 +61,82 @@ public class Friends extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void aVoid) {
+                // Handle any UI updates or further processing here
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View v = inflater.inflate(R.layout.activity_main, null);
+                ll = v.findViewById(R.id.parentLayout);
+                Users currUser = usersDao.getUser(username);
+                List<UsersFriends> favorites = usersFriendsDao.getUsersFriends(currUser.getId());
+                friendsList = new ArrayList<>();
+                Users clickedFriend = usersDao.getUser(username);
 
+                for (UsersFriends favorite : favorites) {
+                    UsersFriends friend = new UsersFriends(favorite.getUserId(), clickedFriend.getId());
+                    friendsList.add(friend);
+                }
+                int count = 0;
+                for(UsersFriends friend: friendsList){
+                    LinearLayout barLayout = new LinearLayout(getBaseContext());
+                    barLayout.setOrientation(LinearLayout.VERTICAL);
+                    TextView name = new TextView(getBaseContext());
+                    name.setText(friend.getFriendId());
+                    name.setTextSize(34);
+                    name.setId(count);
+                    name.setClickable(true);
+                    name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewMore(v);
+                        }
+                    });
+                    barLayout.addView(name);
+                    LinearLayout horizontal = new LinearLayout(getBaseContext());
+                    horizontal.setOrientation(LinearLayout.HORIZONTAL);
+                    TextView friends = new TextView(getBaseContext());
+                    friends.setText("# friends");
+                    friends.setTextSize(28);
+                    horizontal.addView(friends);
+                    ImageButton heartButton = new ImageButton(getBaseContext());
+                    UsersFriends thisFriend = new UsersFriends(usersDao.getUser(username).getId(), friend.getFriendId());
+                    if(favorites.contains(thisFriend)) {
+                        heartButton.setBackgroundResource(R.drawable.red_heart);
+                    } else {
+                        heartButton.setBackgroundResource(R.drawable.gray_heart);
+                    }
+                    heartButton.setTag(friend);
+                    heartButton.setOnClickListener(new View.OnClickListener() {
+                        Users clickedFriends;
+                        boolean isGray;
+                        @Override
+                        public void onClick(View v) {
+                            if(favorites.contains(thisFriend)) {
+                                isGray = false;
+                            } else {
+                                isGray = true;
+                            }
+                            clickedFriends = (Users) v.getTag();
 
-
+                            if (isGray) {
+                                heartButton.setBackgroundResource(R.drawable.red_heart);
+                                isGray = false;
+                                addFriend(true, clickedFriends.getUserName());
+                            } else {
+                                heartButton.setBackgroundResource(R.drawable.gray_heart);
+                                isGray = true;
+                                addFriend(false, clickedFriends.getUserName());
+                            }
+                        }
+                    });
+                    horizontal.addView(heartButton);
+                    barLayout.addView(horizontal);
+                    Space space = new Space(getBaseContext());
+                    space.setMinimumHeight(20);
+                    barLayout.addView(space);
+                    barLayout.setId(count);
+                    count++;
+                    ll.addView(barLayout);
+                }
+                setContentView(v);
             }
         }.execute();
     }
@@ -116,5 +186,56 @@ public class Friends extends AppCompatActivity {
         intent.putExtra("friendId", currFriends.getFriendId());
         intent.putExtra("username", username);
         startActivity(intent);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void addFriend(Boolean isAdd, String friendName) {
+        // add favorite to database
+        if (isAdd) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
+                    UsersDao usersDao = db.usersDao();
+                    UsersFriendsDao friendsDao = db.friendsDao();
+                    Users currUser = usersDao.getUser(username);
+                    UsersFriends clickedFriend = usersFriendsDao.getFriend(friendName);
+
+                    if (currUser != null && clickedFriend != null) {
+                        UsersFriends newFav = new UsersFriends(currUser.getId(), clickedFriend.getFriendId());
+                        friendsDao.insert(newFav);
+                    }
+
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                }
+            }.execute();
+            // delete that ho
+        } else {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    BarHopDatabase db = BarHopDatabase.getDatabase(getApplicationContext());
+                    UsersDao usersDao = db.usersDao();
+                    UsersFriendsDao friendsDao = db.friendsDao();
+                    Users currUser = usersDao.getUser(username);
+                    UsersFriends clickedFriend = usersFriendsDao.getFriend(friendName);
+
+                    if (currUser != null & clickedFriend != null) {
+                        friendsDao.delete(currUser.getId(), clickedFriend.getFriendId());
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                }
+            }.execute();
+        }
     }
 }

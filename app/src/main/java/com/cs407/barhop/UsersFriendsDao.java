@@ -15,6 +15,9 @@ public interface UsersFriendsDao {
     @Query("DELETE FROM usersFriends WHERE userId = :userId AND friendId = :friendId")
     void delete(int userId, int friendId);
 
+    @Query("SELECT * FROM bars WHERE name = :friendName")
+    UsersFriends getFriend(String friendName);
+
     @Query("SELECT * FROM usersFriends WHERE userId = :userId")
     List<UsersFriends> getUsersFriends(int userId);
 }
