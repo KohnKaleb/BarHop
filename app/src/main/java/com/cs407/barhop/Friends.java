@@ -214,7 +214,7 @@ public class Friends extends AppCompatActivity {
 
                 }
             }.execute();
-            // delete that ho
+
         } else {
             new AsyncTask<Void, Void, Void>() {
                 @Override
