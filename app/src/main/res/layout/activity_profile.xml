@@ -48,7 +48,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="187dp"
-                android:src="@drawable/badger" />
+                 />
 
 <!--            <ImageButton-->
 <!--                android:id="@+id/imageButton"-->

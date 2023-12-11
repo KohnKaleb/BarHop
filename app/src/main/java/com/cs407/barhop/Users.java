@@ -14,6 +14,9 @@ public class Users {
     @ColumnInfo(name = "password")
     private String password;
 
+    @ColumnInfo(name = "photo")
+    private String photo;
+
     /* getters and setters */
     public String getUserName() {
         return userName;
@@ -32,4 +35,8 @@ public class Users {
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
+
+    public String getPhoto() { return photo; }
+
+    public void setPhoto(String photo) { this.photo = photo; }
 }
