@@ -1,27 +1,55 @@
 package com.cs407.barhop;
 
+import static android.media.ThumbnailUtils.createImageThumbnail;
+
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import androidx.activity.result.ActivityResultCallback;
+
+
 public class Profile extends AppCompatActivity {
-//    ImageView xIcon;
+    private static final int RESULT_LOAD_IMAGE = 1;
+    //    ImageView xIcon;
     TextView username;
 
     Button button;
     private UsersDao usersDao;
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private static final int REQUEST_IMAGE_PICK = 2;
+
+    private Uri imageUri; // To store the selected image URI
+    private ImageView imageView; // Reference to the ImageView in your layout
+    private ImageView imageView2;
+
+
     private String currUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +61,8 @@ public class Profile extends AppCompatActivity {
 
         currUser = getIntent().getStringExtra("username");
 
+        imageView = findViewById(R.id.imageView);
+
         username.setText(currUser);
 
         // Registers a photo picker activity launcher in single-select mode.
@@ -42,6 +72,8 @@ public class Profile extends AppCompatActivity {
                     // photo picker.
                     if (uri != null) {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
+                        //imageView.setImageResource(R.drawable.badger);
+                        imageView.setImageURI(uri);
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
@@ -49,31 +81,10 @@ public class Profile extends AppCompatActivity {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("BUTTONS", "User tapped the Supabutton");
-
-                // Include only one of the following calls to launch(), depending on the types
-                // of media that you want to let the user choose from.
-
-                // Launch the photo picker and let the user choose images and videos.
-                pickMedia.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageAndVideo.INSTANCE)
-                        .build());
 
                 // Launch the photo picker and let the user choose only images.
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                        .build());
-
-                // Launch the photo picker and let the user choose only videos.
-                pickMedia.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.VideoOnly.INSTANCE)
-                        .build());
-
-                // Launch the photo picker and let the user choose only images/videos of a
-                // specific MIME type, such as GIFs.
-                String mimeType = "image/gif";
-                pickMedia.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
                         .build());
 
             }
