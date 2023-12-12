@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface UsersDao {
 
     @Query("SELECT * FROM users WHERE id = :id")
     Users getUserById(int id);
+
+    @Update
+    void updateUser(Users currUser);
 }

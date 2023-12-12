@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -301,8 +302,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int numFriendsAtBar(String barName) {
-        final CountDownLatch latch = new CountDownLatch(1); // Create a latch with initial count 1
-        final int[] numFriends = {0}; // Using an array to hold an int (mutable)
+        final CountDownLatch latch = new CountDownLatch(1);
+        final AtomicInteger tmpFriends = new AtomicInteger(0);
 
         new Thread(() -> {
             BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
@@ -315,9 +316,13 @@ public class MainActivity extends AppCompatActivity {
             List<UsersFriends> friends = friendsDao.getUsersFriends(currUser.getId());
 
             for (UsersFriends friend : friends) {
-                Users friendObj = usersDao.getUserById(friend.getUserId());
+                Users friendObj = usersDao.getUserById(friend.getFriendId());
+                if (friendObj.getUserName().equals(username)) {
+                    continue;
+                }
+                Log.e("test", String.valueOf(friendObj.getCurrBar()));
                 if (Objects.equals(friendObj.getCurrBar(), barName)) {
-                    ++numFriends[0];
+                    tmpFriends.incrementAndGet();
                 }
             }
 
@@ -329,9 +334,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        return numFriends[0];
+        numFriends = tmpFriends.get();
+        return tmpFriends.get();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -445,7 +451,9 @@ public class MainActivity extends AppCompatActivity {
                         BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
                         UsersDao usersDao = database.usersDao();
                         Users currUser = usersDao.getUser(username);
+                        Log.e("test", String.valueOf(bar.getName()));
                         currUser.setCurrBar(bar.getName());
+                        usersDao.updateUser(currUser);
                         return null;
                     }
 

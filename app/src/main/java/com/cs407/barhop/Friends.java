@@ -70,7 +70,7 @@ public class Friends extends AppCompatActivity {
                 Users clickedFriend = usersDao.getUser(username);
 
                 for (UsersFriends favorite : favorites) {
-                    Users friend = usersDao.getUserById(favorite.getUserId());
+                    Users friend = usersDao.getUserById(favorite.getFriendId());
                     friendsList.add(friend);
                 }
                 int count = 0;
