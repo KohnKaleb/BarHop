@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         TextView friends = new TextView(getBaseContext());
         numFriends = numFriendsAtBar(b.getName());
         Log.e("test", String.valueOf(numFriends));
-        friends.setText(String.valueOf(numFriends));
+        friends.setText(String.valueOf(numFriends) + " friends!");
         friends.setTextSize(28);
         horizontal.addView(friends);
         ImageButton heartButton = new ImageButton(getBaseContext());

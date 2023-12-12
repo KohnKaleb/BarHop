@@ -118,7 +118,7 @@ public class Friends extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                for(int i = 0; i < ll.getChildCount(); i++) {
+                for(int i = 2; i < ll.getChildCount(); i++) {
                     LinearLayout currLayout = (LinearLayout) ll.getChildAt(i);
                     TextView text = (TextView) currLayout.getChildAt(0);
                     if (!(text.getText().toString().toLowerCase().contains(newText.toLowerCase()))) {
