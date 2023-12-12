@@ -28,6 +28,9 @@
             android:name=".Friends"
             android:exported="false" />
         <activity
+            android:name=".AddFriends"
+            android:exported="false" />
+        <activity
             android:name=".History"
             android:exported="false" />
         <activity

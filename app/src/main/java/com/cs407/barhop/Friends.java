@@ -9,12 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -38,7 +38,6 @@ public class Friends extends AppCompatActivity {
 
         username = getIntent().getStringExtra("username");
         populateAndRetrieveData();
-
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -63,7 +62,7 @@ public class Friends extends AppCompatActivity {
             protected void onPostExecute(Void aVoid) {
                 // Handle any UI updates or further processing here
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View v = inflater.inflate(R.layout.activity_main, null);
+                View v = inflater.inflate(R.layout.activity_friends, null);
                 ll = v.findViewById(R.id.parentLayout);
                 Users currUser = usersDao.getUser(username);
                 List<UsersFriends> favorites = usersFriendsDao.getUsersFriends(currUser.getId());
@@ -187,5 +186,12 @@ public class Friends extends AppCompatActivity {
                 }
             }.execute();
         }
+    }
+
+    public void switchToAddFriends(View view) {
+        Log.e("addF", "ADD FRIES");
+        Intent intent = new Intent(this, AddFriends.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 }
