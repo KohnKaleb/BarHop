@@ -21,7 +21,8 @@
 
         <ScrollView
             android:layout_width="798dp"
-            android:layout_height="1278dp">
+            android:layout_height="1278dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:id="@+id/addFriendsParent"

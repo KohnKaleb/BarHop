@@ -97,10 +97,6 @@ public class Favorites extends AppCompatActivity {
                     LinearLayout horizontal = new LinearLayout(getBaseContext());
                     horizontal.setOrientation(LinearLayout.HORIZONTAL);
                     TextView friends = new TextView(getBaseContext());
-                    friends.setTextAppearance(R.style.FriendsStyles);
-                    friends.setText("# friends");
-                    friends.setTextSize(28);
-                    horizontal.addView(friends);
                     ImageButton heartButton = new ImageButton(getBaseContext());
                     UsersFavoriteBars thisBar = new UsersFavoriteBars(usersDao.getUser(username).getId(), b.getBarId());
                     if(favorites.contains(thisBar)) {
