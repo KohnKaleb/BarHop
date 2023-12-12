@@ -29,7 +29,7 @@ public class Friends extends AppCompatActivity {
     private String username;
     private UsersFriendsDao usersFriendsDao;
     private LinearLayout ll;
-    private List<UsersFriends> friendsList;
+    private List<Users> friendsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,63 +71,21 @@ public class Friends extends AppCompatActivity {
                 Users clickedFriend = usersDao.getUser(username);
 
                 for (UsersFriends favorite : favorites) {
-                    UsersFriends friend = new UsersFriends(favorite.getUserId(), clickedFriend.getId());
+                    Users friend = usersDao.getUserById(favorite.getUserId());
                     friendsList.add(friend);
                 }
                 int count = 0;
-                for(UsersFriends friend: friendsList){
+                for(Users friend: friendsList){
                     LinearLayout barLayout = new LinearLayout(getBaseContext());
                     barLayout.setOrientation(LinearLayout.VERTICAL);
                     TextView name = new TextView(getBaseContext());
-                    name.setText(friend.getFriendId());
+                    name.setText(friend.getUserName());
                     name.setTextSize(34);
-                    name.setId(count);
-                    name.setClickable(true);
-                    name.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            viewMore(v);
-                        }
-                    });
                     barLayout.addView(name);
                     LinearLayout horizontal = new LinearLayout(getBaseContext());
                     horizontal.setOrientation(LinearLayout.HORIZONTAL);
                     TextView friends = new TextView(getBaseContext());
-                    friends.setText("# friends");
-                    friends.setTextSize(28);
                     horizontal.addView(friends);
-                    ImageButton heartButton = new ImageButton(getBaseContext());
-                    UsersFriends thisFriend = new UsersFriends(usersDao.getUser(username).getId(), friend.getFriendId());
-                    if(favorites.contains(thisFriend)) {
-                        heartButton.setBackgroundResource(R.drawable.red_heart);
-                    } else {
-                        heartButton.setBackgroundResource(R.drawable.gray_heart);
-                    }
-                    heartButton.setTag(friend);
-                    heartButton.setOnClickListener(new View.OnClickListener() {
-                        Users clickedFriends;
-                        boolean isGray;
-                        @Override
-                        public void onClick(View v) {
-                            if(favorites.contains(thisFriend)) {
-                                isGray = false;
-                            } else {
-                                isGray = true;
-                            }
-                            clickedFriends = (Users) v.getTag();
-
-                            if (isGray) {
-                                heartButton.setBackgroundResource(R.drawable.red_heart);
-                                isGray = false;
-                                addFriend(true, clickedFriends.getUserName());
-                            } else {
-                                heartButton.setBackgroundResource(R.drawable.gray_heart);
-                                isGray = true;
-                                addFriend(false, clickedFriends.getUserName());
-                            }
-                        }
-                    });
-                    horizontal.addView(heartButton);
                     barLayout.addView(horizontal);
                     Space space = new Space(getBaseContext());
                     space.setMinimumHeight(20);
@@ -178,14 +136,6 @@ public class Friends extends AppCompatActivity {
             }
         });
         return true;
-    }
-    public void viewMore(View view) {
-        Intent intent = new Intent(this, BarInfo.class);
-        UsersFriends currFriends = friendsList.get(view.getId());
-        intent.putExtra("userId", currFriends.getUserId());
-        intent.putExtra("friendId", currFriends.getFriendId());
-        intent.putExtra("username", username);
-        startActivity(intent);
     }
 
     @SuppressLint("StaticFieldLeak")

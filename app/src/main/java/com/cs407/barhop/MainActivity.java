@@ -23,12 +23,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
 
@@ -38,11 +35,11 @@ import android.widget.TextView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Date;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,9 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
     private BarHopDatabase barhopDatabase;
     private BarsDao barsDao;
+    private UsersFriendsDao friendsDao;
     private UsersFavoriteBarsDao favoriteBarsDao;
     private UsersDao usersDao;
+    private UsersHistoryDao historyDao;
     private String username;
+
+    int numFriends;
     private LinearLayout ll;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -250,7 +251,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout horizontal = new LinearLayout(getBaseContext());
         horizontal.setOrientation(LinearLayout.HORIZONTAL);
         TextView friends = new TextView(getBaseContext());
-        friends.setText("# friends");
+        numFriends = numFriendsAtBar(b.getName());
+        Log.e("test", String.valueOf(numFriends));
+        friends.setText(String.valueOf(numFriends));
         friends.setTextSize(28);
         horizontal.addView(friends);
         ImageButton heartButton = new ImageButton(getBaseContext());
@@ -297,6 +300,38 @@ public class MainActivity extends AppCompatActivity {
         return count;
     }
 
+    private int numFriendsAtBar(String barName) {
+        final CountDownLatch latch = new CountDownLatch(1); // Create a latch with initial count 1
+        final int[] numFriends = {0}; // Using an array to hold an int (mutable)
+
+        new Thread(() -> {
+            BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
+            BarsDao barsDao = database.barsDao();
+            historyDao = database.historyDao();
+            friendsDao = database.friendsDao();
+            UsersDao usersDao = database.usersDao();
+
+            Users currUser = usersDao.getUser(username);
+            List<UsersFriends> friends = friendsDao.getUsersFriends(currUser.getId());
+
+            for (UsersFriends friend : friends) {
+                Users friendObj = usersDao.getUserById(friend.getUserId());
+                if (Objects.equals(friendObj.getCurrBar(), barName)) {
+                    ++numFriends[0];
+                }
+            }
+
+            latch.countDown();
+        }).start();
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return numFriends[0];
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -387,6 +422,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     public void updateLocationInfo(Location location) {
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
@@ -402,6 +438,23 @@ public class MainActivity extends AppCompatActivity {
 
             double proximityThreshold = 6;
             if (distanceInMeters <= proximityThreshold) {
+                new AsyncTask<Void, Void, Void>() {
+                    @SuppressLint("StaticFieldLeak")
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        BarHopDatabase database = BarHopDatabase.getDatabase(getApplicationContext());
+                        UsersDao usersDao = database.usersDao();
+                        Users currUser = usersDao.getUser(username);
+                        currUser.setCurrBar(bar.getName());
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+
+                    }
+                }.execute();
+
                 updateHistoryInformation(bar);
             }
         }

@@ -17,4 +17,7 @@ public interface UsersDao {
 
     @Query("SELECT * FROM users WHERE username = :username")
     Users getUser(String username);
+
+    @Query("SELECT * FROM users WHERE id = :id")
+    Users getUserById(int id);
 }

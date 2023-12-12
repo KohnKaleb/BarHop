@@ -17,6 +17,9 @@ public class Users {
     @ColumnInfo(name = "photo")
     private String photo;
 
+    @ColumnInfo(name = "currBar")
+    private String currBar;
+
     /* getters and setters */
     public String getUserName() {
         return userName;
@@ -39,4 +42,8 @@ public class Users {
     public String getPhoto() { return photo; }
 
     public void setPhoto(String photo) { this.photo = photo; }
+
+    public String getCurrBar() { return currBar; }
+
+    public void setCurrBar(String currBar) { this.currBar = currBar; }
 }
