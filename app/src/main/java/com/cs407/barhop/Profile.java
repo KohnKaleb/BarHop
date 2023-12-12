@@ -73,7 +73,7 @@ public class Profile extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
 
-        username.setText(currUser);
+        username.setText("Username: " + currUser);
 
         db = BarHopDatabase.getDatabase(getApplicationContext());
 

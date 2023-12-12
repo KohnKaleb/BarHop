@@ -24,5 +24,5 @@
     <string name="signup_btn">Signup</string>
     <string name="welcome_text">Welcome to BarHop!</string>
     <string name="welcome_text2">Please login or sign up to continue.</string>
-    <string name="change_photo">Change Profile Picture</string>
+    <string name="change_photo">Add/Change Profile Picture</string>
 </resources>

@@ -82,6 +82,7 @@ public class Favorites extends AppCompatActivity {
                     LinearLayout barLayout = new LinearLayout(getBaseContext());
                     barLayout.setOrientation(LinearLayout.VERTICAL);
                     TextView name = new TextView(getBaseContext());
+                    name.setTextAppearance(R.style.BarStyles);
                     name.setText(b.getName());
                     name.setTextSize(34);
                     name.setId(count);
@@ -96,6 +97,7 @@ public class Favorites extends AppCompatActivity {
                     LinearLayout horizontal = new LinearLayout(getBaseContext());
                     horizontal.setOrientation(LinearLayout.HORIZONTAL);
                     TextView friends = new TextView(getBaseContext());
+                    friends.setTextAppearance(R.style.FriendsStyles);
                     friends.setText("# friends");
                     friends.setTextSize(28);
                     horizontal.addView(friends);

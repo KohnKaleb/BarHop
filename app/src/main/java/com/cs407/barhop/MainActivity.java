@@ -238,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout barLayout = new LinearLayout(getBaseContext());
         barLayout.setOrientation(LinearLayout.VERTICAL);
         TextView name = new TextView(getBaseContext());
+        name.setTextAppearance(R.style.BarStyles);
         name.setText(b.getName());
         name.setTextSize(34);
         name.setId(count);
@@ -252,10 +253,11 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout horizontal = new LinearLayout(getBaseContext());
         horizontal.setOrientation(LinearLayout.HORIZONTAL);
         TextView friends = new TextView(getBaseContext());
+        friends.setTextAppearance(R.style.FriendsStyles);
         numFriends = numFriendsAtBar(b.getName());
         Log.e("test", String.valueOf(numFriends));
         friends.setText(String.valueOf(numFriends) + " friends!");
-        friends.setTextSize(28);
+        friends.setTextSize(26);
         horizontal.addView(friends);
         ImageButton heartButton = new ImageButton(getBaseContext());
         List<UsersFavoriteBars> favorites = favoriteBarsDao.getFavoriteBars(usersDao.getUser(username).getId());
